@@ -29,13 +29,13 @@ export default {
     },
 
     displaySeason(item) {
-      return item.media_type == 'tv' && item.rating != null && item.tmdb_id && ! item.watchlist;
+      return item.rating != null && item.tmdb_id && ! item.watchlist;
     },
 
     openSeasonModal(item) {
       const data = {
-        tmdb_id: item.tmdb_id,
-        title: item.title
+        id:item.id,
+        title: item.show_title
       };
 
       this.fetchEpisodes(data);

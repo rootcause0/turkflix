@@ -4,7 +4,7 @@
     Route::get('/logout', 'UserController@logout');
     Route::post('/login', 'UserController@login');
 
-    Route::get('/episodes/{tmdbId}', 'ItemController@episodes');
+    Route::get('/episodes/{id}', 'ItemController@episodes');
     Route::get('/items/{type}/{orderBy}/{sortDirection}', 'ItemController@items');
     Route::get('/search-items', 'ItemController@search');
 

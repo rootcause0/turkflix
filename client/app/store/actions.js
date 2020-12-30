@@ -47,35 +47,22 @@ export function setColorScheme({commit}, color) {
 
 export function setPageTitle({}, title = null) {
   if( ! title) {
-    document.title = 'Flox';
+    document.title = 'Turkflix';
   } else {
-    document.title = `${title} - Flox`;
+    document.title = `${title} - Turkflix`;
   }
 }
 
 export function fetchEpisodes({commit}, data) {
   commit('SET_LOADING_MODAL_DATA', true);
-  http(`${config.api}/episodes/${data.tmdb_id}`).then(response => {
-    const nextEpisode = response.data.next_episode;
-
+  http(`${config.api}/episodes/${data.id}`).then(response => {
     commit('SET_MODAL_DATA', {
       title: data.title,
-      episodes: response.data.episodes,
+      shows: response.data.shows,
       spoiler: response.data.spoiler
     });
 
     commit('SET_LOADING_MODAL_DATA', false);
 
-    if(nextEpisode) {
-      commit('SET_SEASON_ACTIVE_MODAL', nextEpisode.season_number);
-
-      // Scroll to next episode
-      setTimeout(() => {
-        const container = document.querySelector('.modal-content');
-        const episode = document.querySelector(`[data-episode='${nextEpisode.episode_number}']`);
-
-        container.scrollTop = episode.offsetTop - episode.offsetHeight;
-      }, 10);
-    }
   });
 }

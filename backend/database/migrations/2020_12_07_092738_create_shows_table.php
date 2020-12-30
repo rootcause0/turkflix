@@ -17,7 +17,7 @@ class CreateShowsTable extends Migration
             $table->bigIncrements('id');
             $table->string('imdb_id');
             $table->string('show_title');
-            $table->string("original_title");
+            $table->string("original_title")->nullable();
             $table->string("slug");
             $table->string("poster");
             $table->string("back_poster");

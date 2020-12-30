@@ -13,28 +13,23 @@
     </div>
 
     <div class="season-tabs" v-if=" ! loadingModalData">
-      <span class="season-number no-select" @click="SET_SEASON_ACTIVE_MODAL(index)" v-for="(season, index) in episodes" :class="{active: index == seasonActiveModal, completed: seasonCompleted(index)}">
-        S{{ addZero(index) }}
+      <span class="season-number no-select" @click="SET_SEASON_ACTIVE_MODAL(index)" v-for="(seasons, index) in shows.seasons" :class="{active: index == seasonActiveModal}">
+        {{seasons.season_name}}
       </span>
     </div>
 
     <div class="item-header no-select" v-if=" ! loadingModalData">
       <span class="header-episode">#</span>
-      <span class="header-name">Name</span>
-      <span class="header-seen" @click="toggleAll()" v-if="auth">Toggle all</span>
+      <span class="header-name">Bölüm İsimleri</span>
     </div>
 
     <div class="modal-content" v-if=" ! loadingModalData">
       <div @click="toggleEpisode(episode)"
-           class="modal-item" v-for="(episode, index) in episodes[seasonActiveModal]"
-           :data-episode="episode.episode_number"
+           class="modal-item" v-for="(episode, index) in shows.seasons[seasonActiveModal].episodes"
+           :data-episode="episode.name"
       >
-        <span class="modal-episode no-select">E{{ addZero(episode.episode_number) }}</span>
-        <span class="modal-name" :class="{'spoiler-protect': spoiler && ! episode.seen}">{{ episode.name }}</span>
-        <i class="item-has-src" v-if="episode.src"></i>
-        <span class="modal-release-episode" v-if="episode.release_episode_human_format" :title="released(episode.release_episode)"><i></i> {{ episode.release_episode_human_format }}</span>
-        <span class="modal-release-episode" v-if=" ! episode.release_episode"><i></i> {{ lang('no release') }}</span>
-        <span class="episode-seen" :class="{seen: episode.seen}"><i></i></span>
+        <span class="modal-episode no-select">B{{ addZero(episode.episode_number) }}</span>
+        <span class="modal-name">{{ episode.name }}</span>
       </div>
     </div>
 
@@ -64,8 +59,8 @@
         seasonActiveModal: state => state.seasonActiveModal
       }),
 
-      episodes() {
-        return this.modalData.episodes;
+      shows() {
+        return this.modalData.shows;
       },
 
       spoiler() {
@@ -84,7 +79,7 @@
 
       toggleAll() {
         const season = this.seasonActiveModal;
-        const tmdb_id = this.modalData.episodes[1][0].tmdb_id;
+        const tmdb_id = this.modalData.shows[1][0].tmdb_id;
         const seen = this.seasonCompleted(season);
 
         this.markAllEpisodes(season, seen);
@@ -97,7 +92,7 @@
       },
 
       markAllEpisodes(season, seen) {
-        const episodes = this.episodes[season];
+        const episodes = this.shows[season];
 
         for(let episode of episodes) {
           episode.seen = ! seen;
@@ -115,7 +110,7 @@
       },
 
       seasonCompleted(index) {
-        const episodes = this.episodes[index];
+        const episodes = this.shows[index];
 
         for(let episode of episodes) {
           if( ! episode.seen) {

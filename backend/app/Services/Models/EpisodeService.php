@@ -79,16 +79,12 @@
      * @param $tmdbId
      * @return array
      */
-    public function getAllByTmdbId($tmdbId)
+    public function getAllByTmdbId($id)
     {
       Carbon::setLocale(config('app.TRANSLATION'));
-
-      $episodes = $this->model->findByTmdbId($tmdbId)->oldest('episode_number')->get()->groupBy('season_number');
-      $nextEpisode = $this->model->findByTmdbId($tmdbId)->where('seen', 0)->oldest('season_number')->oldest('episode_number')->first();
-
+      $shows = Show::with('seasons.episodes')->find($id);
       return [
-        'episodes' => $episodes,
-        'next_episode' => $nextEpisode,
+        'shows' => $shows,
         'spoiler' => Setting::first()->episode_spoiler_protection,
       ];
     }

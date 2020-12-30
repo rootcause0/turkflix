@@ -771,12 +771,12 @@ exports.default = {
       return genre;
     },
     displaySeason: function displaySeason(item) {
-      return item.media_type == 'tv' && item.rating != null && item.tmdb_id && !item.watchlist;
+      return item.rating != null && item.tmdb_id && !item.watchlist;
     },
     openSeasonModal: function openSeasonModal(item) {
       var data = {
-        tmdb_id: item.tmdb_id,
-        title: item.title
+        id: item.id,
+        title: item.show_title
       };
 
       this.fetchEpisodes(data);
@@ -1357,8 +1357,8 @@ exports.default = {
       return state.seasonActiveModal;
     }
   }), {
-    episodes: function episodes() {
-      return this.modalData.episodes;
+    shows: function shows() {
+      return this.modalData.shows;
     },
     spoiler: function spoiler() {
       return this.modalData.spoiler;
@@ -1373,7 +1373,7 @@ exports.default = {
     },
     toggleAll: function toggleAll() {
       var season = this.seasonActiveModal;
-      var tmdb_id = this.modalData.episodes[1][0].tmdb_id;
+      var tmdb_id = this.modalData.shows[1][0].tmdb_id;
       var seen = this.seasonCompleted(season);
 
       this.markAllEpisodes(season, seen);
@@ -1385,7 +1385,7 @@ exports.default = {
       });
     },
     markAllEpisodes: function markAllEpisodes(season, seen) {
-      var episodes = this.episodes[season];
+      var episodes = this.shows[season];
 
       var _iteratorNormalCompletion = true;
       var _didIteratorError = false;
@@ -1422,7 +1422,7 @@ exports.default = {
       }
     },
     seasonCompleted: function seasonCompleted(index) {
-      var episodes = this.episodes[index];
+      var episodes = this.shows[index];
 
       var _iteratorNormalCompletion2 = true;
       var _didIteratorError2 = false;
@@ -6060,22 +6060,19 @@ var render = function() {
       ? _c(
           "div",
           { staticClass: "season-tabs" },
-          _vm._l(_vm.episodes, function(season, index) {
+          _vm._l(_vm.shows.seasons, function(seasons, index) {
             return _c(
               "span",
               {
                 staticClass: "season-number no-select",
-                class: {
-                  active: index == _vm.seasonActiveModal,
-                  completed: _vm.seasonCompleted(index)
-                },
+                class: { active: index == _vm.seasonActiveModal },
                 on: {
                   click: function($event) {
                     return _vm.SET_SEASON_ACTIVE_MODAL(index)
                   }
                 }
               },
-              [_vm._v("\n      S" + _vm._s(_vm.addZero(index)) + "\n    ")]
+              [_vm._v("\n      " + _vm._s(seasons.season_name) + "\n    ")]
             )
           }),
           0
@@ -6086,22 +6083,7 @@ var render = function() {
       ? _c("div", { staticClass: "item-header no-select" }, [
           _c("span", { staticClass: "header-episode" }, [_vm._v("#")]),
           _vm._v(" "),
-          _c("span", { staticClass: "header-name" }, [_vm._v("Name")]),
-          _vm._v(" "),
-          _vm.auth
-            ? _c(
-                "span",
-                {
-                  staticClass: "header-seen",
-                  on: {
-                    click: function($event) {
-                      return _vm.toggleAll()
-                    }
-                  }
-                },
-                [_vm._v("Toggle all")]
-              )
-            : _vm._e()
+          _c("span", { staticClass: "header-name" }, [_vm._v("Bölüm İsimleri")])
         ])
       : _vm._e(),
     _vm._v(" "),
@@ -6109,12 +6091,15 @@ var render = function() {
       ? _c(
           "div",
           { staticClass: "modal-content" },
-          _vm._l(_vm.episodes[_vm.seasonActiveModal], function(episode, index) {
+          _vm._l(_vm.shows.seasons[_vm.seasonActiveModal].episodes, function(
+            episode,
+            index
+          ) {
             return _c(
               "div",
               {
                 staticClass: "modal-item",
-                attrs: { "data-episode": episode.episode_number },
+                attrs: { "data-episode": episode.name },
                 on: {
                   click: function($event) {
                     return _vm.toggleEpisode(episode)
@@ -6123,53 +6108,12 @@ var render = function() {
               },
               [
                 _c("span", { staticClass: "modal-episode no-select" }, [
-                  _vm._v("E" + _vm._s(_vm.addZero(episode.episode_number)))
+                  _vm._v("B" + _vm._s(_vm.addZero(episode.episode_number)))
                 ]),
                 _vm._v(" "),
-                _c(
-                  "span",
-                  {
-                    staticClass: "modal-name",
-                    class: { "spoiler-protect": _vm.spoiler && !episode.seen }
-                  },
-                  [_vm._v(_vm._s(episode.name))]
-                ),
-                _vm._v(" "),
-                episode.src
-                  ? _c("i", { staticClass: "item-has-src" })
-                  : _vm._e(),
-                _vm._v(" "),
-                episode.release_episode_human_format
-                  ? _c(
-                      "span",
-                      {
-                        staticClass: "modal-release-episode",
-                        attrs: { title: _vm.released(episode.release_episode) }
-                      },
-                      [
-                        _c("i"),
-                        _vm._v(
-                          " " + _vm._s(episode.release_episode_human_format)
-                        )
-                      ]
-                    )
-                  : _vm._e(),
-                _vm._v(" "),
-                !episode.release_episode
-                  ? _c("span", { staticClass: "modal-release-episode" }, [
-                      _c("i"),
-                      _vm._v(" " + _vm._s(_vm.lang("no release")))
-                    ])
-                  : _vm._e(),
-                _vm._v(" "),
-                _c(
-                  "span",
-                  {
-                    staticClass: "episode-seen",
-                    class: { seen: episode.seen }
-                  },
-                  [_c("i")]
-                )
+                _c("span", { staticClass: "modal-name" }, [
+                  _vm._v(_vm._s(episode.name))
+                ])
               ]
             )
           }),
@@ -13986,9 +13930,9 @@ function setPageTitle(_ref5) {
   (0, _objectDestructuringEmpty3.default)(_ref5);
 
   if (!title) {
-    document.title = 'Flox';
+    document.title = 'Turkflix';
   } else {
-    document.title = title + ' - Flox';
+    document.title = title + ' - Turkflix';
   }
 }
 
@@ -13996,27 +13940,14 @@ function fetchEpisodes(_ref6, data) {
   var commit = _ref6.commit;
 
   commit('SET_LOADING_MODAL_DATA', true);
-  (0, _axios2.default)(config.api + '/episodes/' + data.tmdb_id).then(function (response) {
-    var nextEpisode = response.data.next_episode;
-
+  (0, _axios2.default)(config.api + '/episodes/' + data.id).then(function (response) {
     commit('SET_MODAL_DATA', {
       title: data.title,
-      episodes: response.data.episodes,
+      shows: response.data.shows,
       spoiler: response.data.spoiler
     });
 
     commit('SET_LOADING_MODAL_DATA', false);
-
-    if (nextEpisode) {
-      commit('SET_SEASON_ACTIVE_MODAL', nextEpisode.season_number);
-
-      setTimeout(function () {
-        var container = document.querySelector('.modal-content');
-        var episode = document.querySelector('[data-episode=\'' + nextEpisode.episode_number + '\']');
-
-        container.scrollTop = episode.offsetTop - episode.offsetHeight;
-      }, 10);
-    }
   });
 }
 

@@ -24,9 +24,9 @@
       return $this->itemService->getWithPagination($type, $orderBy, $sortDirection);
     }
 
-    public function episodes($tmdbId)
+    public function episodes($id)
     {
-      return $this->episodeService->getAllByTmdbId($tmdbId);
+      return $this->episodeService->getAllByTmdbId($id);
     }
 
     public function search()
