@@ -8,7 +8,6 @@ Homestead.yaml
 /backend/.phpunit.result.cache
 
 */.DS_Store
-/public/assets/app.css
 /public/assets/app.js
 /public/assets/vendor.js
 /public/assets/poster/*.jpg

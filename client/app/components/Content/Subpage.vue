@@ -40,7 +40,7 @@
               </div>
 
               <!-- todo: move to own component -->
-              <div class="row">
+                <div class="big-teaser-item-data">
                 <span class="item-year">{{ item.release }}</span>
                 <span class="item-title">{{ item.show_title }}</span>
                 <h4 class="item-genre text-muted">{{ item.original_title }}</h4>
@@ -48,13 +48,12 @@
                   <router-link :key="genre.id" :to="'/genre/' + genre.name"
                                v-for="genre in item.genre">{{ genre.name }}</router-link>
                 </span>
-
-                <div class="big-teaser-buttons no-select" :class="{'without-watchlist': item.rating != null || ! auth}">
-                  <span :title="lang('episodes')" v-if="displaySeason(item) && latestEpisode"
-                        @click="openSeasonModal(item)"
-                        class="is-a-show">
-                    S{{ season }}E{{ episode }}
-                  </span>
+                </div>
+                <div class="big-teaser-buttons no-select"  @click="openSeasonModal(item)">
+                  <span :title="lang('episodes')"
+                        class="button-watchlist">
+                İzle
+              </span>
                   <span @click="openTrailer()" v-if="item.youtube_key" class="button-trailer"><i class="icon-trailer"></i> {{ lang('watch trailer') }}</span>
                   <a v-if="item.imdb_id" :href="`http://www.imdb.com/title/${item.imdb_id}`" target="_blank"
                      class="button-imdb-rating">
@@ -64,7 +63,8 @@
                   </a>
                 </div>
 
-              </div>
+
+
             </div>
           </div>
         </div>

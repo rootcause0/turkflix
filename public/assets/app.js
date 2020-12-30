@@ -10048,7 +10048,7 @@ var render = function() {
                   1
                 ),
                 _vm._v(" "),
-                _c("div", { staticClass: "row" }, [
+                _c("div", { staticClass: "big-teaser-item-data" }, [
                   _c("span", { staticClass: "item-year" }, [
                     _vm._v(_vm._s(_vm.item.release))
                   ]),
@@ -10075,101 +10075,86 @@ var render = function() {
                       )
                     }),
                     1
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "div",
-                    {
-                      staticClass: "big-teaser-buttons no-select",
-                      class: {
-                        "without-watchlist":
-                          _vm.item.rating != null || !_vm.auth
-                      }
-                    },
-                    [
-                      _vm.displaySeason(_vm.item) && _vm.latestEpisode
-                        ? _c(
-                            "span",
-                            {
-                              staticClass: "is-a-show",
-                              attrs: { title: _vm.lang("episodes") },
-                              on: {
-                                click: function($event) {
-                                  return _vm.openSeasonModal(_vm.item)
-                                }
-                              }
-                            },
-                            [
-                              _vm._v(
-                                "\n                  S" +
-                                  _vm._s(_vm.season) +
-                                  "E" +
-                                  _vm._s(_vm.episode) +
-                                  "\n                "
-                              )
-                            ]
-                          )
-                        : _vm._e(),
-                      _vm._v(" "),
-                      _vm.item.youtube_key
-                        ? _c(
-                            "span",
-                            {
-                              staticClass: "button-trailer",
-                              on: {
-                                click: function($event) {
-                                  return _vm.openTrailer()
-                                }
-                              }
-                            },
-                            [
-                              _c("i", { staticClass: "icon-trailer" }),
-                              _vm._v(" " + _vm._s(_vm.lang("watch trailer")))
-                            ]
-                          )
-                        : _vm._e(),
-                      _vm._v(" "),
-                      _vm.item.imdb_id
-                        ? _c(
-                            "a",
-                            {
-                              staticClass: "button-imdb-rating",
-                              attrs: {
-                                href:
-                                  "http://www.imdb.com/title/" +
-                                  _vm.item.imdb_id,
-                                target: "_blank"
-                              }
-                            },
-                            [
-                              _vm.loadingImdb
-                                ? _c("i", [
-                                    _vm._v(
-                                      _vm._s(_vm.lang("loading imdb rating"))
-                                    )
-                                  ])
-                                : _vm._e(),
-                              _vm._v(" "),
-                              _vm.item.imdb_rating && !_vm.loadingImdb
-                                ? _c("i", [
-                                    _c("b", [
-                                      _vm._v(_vm._s(_vm.item.imdb_rating))
-                                    ]),
-                                    _vm._v(" IMDb")
-                                  ])
-                                : _vm._e(),
-                              _vm._v(" "),
-                              !_vm.item.imdb_rating && !_vm.loadingImdb
-                                ? _c("i", [
-                                    _vm._v(_vm._s(_vm.lang("no imdb rating")))
-                                  ])
-                                : _vm._e()
-                            ]
-                          )
-                        : _vm._e()
-                    ]
                   )
-                ])
+                ]),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    staticClass: "big-teaser-buttons no-select",
+                    on: {
+                      click: function($event) {
+                        return _vm.openSeasonModal(_vm.item)
+                      }
+                    }
+                  },
+                  [
+                    _c(
+                      "span",
+                      {
+                        staticClass: "button-watchlist",
+                        attrs: { title: _vm.lang("episodes") }
+                      },
+                      [_vm._v("\n              İzle\n            ")]
+                    ),
+                    _vm._v(" "),
+                    _vm.item.youtube_key
+                      ? _c(
+                          "span",
+                          {
+                            staticClass: "button-trailer",
+                            on: {
+                              click: function($event) {
+                                return _vm.openTrailer()
+                              }
+                            }
+                          },
+                          [
+                            _c("i", { staticClass: "icon-trailer" }),
+                            _vm._v(" " + _vm._s(_vm.lang("watch trailer")))
+                          ]
+                        )
+                      : _vm._e(),
+                    _vm._v(" "),
+                    _vm.item.imdb_id
+                      ? _c(
+                          "a",
+                          {
+                            staticClass: "button-imdb-rating",
+                            attrs: {
+                              href:
+                                "http://www.imdb.com/title/" + _vm.item.imdb_id,
+                              target: "_blank"
+                            }
+                          },
+                          [
+                            _vm.loadingImdb
+                              ? _c("i", [
+                                  _vm._v(
+                                    _vm._s(_vm.lang("loading imdb rating"))
+                                  )
+                                ])
+                              : _vm._e(),
+                            _vm._v(" "),
+                            _vm.item.imdb_rating && !_vm.loadingImdb
+                              ? _c("i", [
+                                  _c("b", [
+                                    _vm._v(_vm._s(_vm.item.imdb_rating))
+                                  ]),
+                                  _vm._v(" IMDb")
+                                ])
+                              : _vm._e(),
+                            _vm._v(" "),
+                            !_vm.item.imdb_rating && !_vm.loadingImdb
+                              ? _c("i", [
+                                  _vm._v(_vm._s(_vm.lang("no imdb rating")))
+                                ])
+                              : _vm._e()
+                          ]
+                        )
+                      : _vm._e()
+                  ]
+                )
               ])
             ])
           ])

@@ -3552,6 +3552,7 @@ main {
 
 .button-watchlist {
   background: #238cce;
+  width:140px;
   color: rgba(255, 255, 255, 0.9); }
   .button-watchlist:hover {
     background: #2f99dc; }
