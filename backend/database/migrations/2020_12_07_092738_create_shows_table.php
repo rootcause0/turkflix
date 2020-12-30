@@ -15,7 +15,14 @@ class CreateShowsTable extends Migration
     {
         Schema::create('shows', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->string('imdb_id');
             $table->string('show_title');
+            $table->string("original_title");
+            $table->string("slug");
+            $table->string("poster");
+            $table->string("back_poster");
+            $table->string("youtube_key");
+            $table->string("release");
             $table->timestamps();
         });
     }
