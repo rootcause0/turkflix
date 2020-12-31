@@ -1,6 +1,6 @@
 <template>
   <main>
-    <div class="content-submenu" v-if=" ! loading && items.length">
+    <div class="content-submenu" v-if=" ! loading">
       <div class="sort-wrap no-select">
         <div class="sort-direction" @click="setUserSortDirection()">
           <i v-if="userSortDirection == 'asc'">&#8593;</i>
@@ -23,7 +23,7 @@
             :ratings="displayRatings"
       ></Item>
 
-      <span class="nothing-found" v-if=" ! items.length">{{ lang('nothing found') }}</span>
+      <span class="nothing-found" v-if="!items">{{ lang('nothing found') }}</span>
 
       <div class="load-more-wrap">
         <span class="load-more" v-if=" ! clickedMoreLoading && paginator" @click="loadMore()">{{ lang('load more') }}</span>
@@ -31,7 +31,7 @@
       </div>
     </div>
 
-    <span class="loader fullsize-loader" v-if="loading"><i></i></span>
+    <span class="loader-old fullsize-loader" v-if="loading"><i></i></span>
   </main>
 </template>
 

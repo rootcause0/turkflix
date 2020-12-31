@@ -4850,52 +4850,14 @@ var render = function() {
                   _c(
                     "router-link",
                     {
-                      attrs: { to: "/trending" },
+                      attrs: { to: "/" },
                       nativeOn: {
                         click: function($event) {
-                          return _vm.refresh("trending")
+                          return _vm.refresh("/")
                         }
                       }
                     },
-                    [_vm._v(_vm._s(_vm.lang("trending")))]
-                  )
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "li",
-                [
-                  _c(
-                    "router-link",
-                    {
-                      attrs: { to: "/now-playing" },
-                      nativeOn: {
-                        click: function($event) {
-                          return _vm.refresh("now-playing")
-                        }
-                      }
-                    },
-                    [_vm._v(_vm._s(_vm.lang("now-playing")) + "\n          ")]
-                  )
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c(
-                "li",
-                [
-                  _c(
-                    "router-link",
-                    {
-                      attrs: { to: "/upcoming" },
-                      nativeOn: {
-                        click: function($event) {
-                          return _vm.refresh("upcoming")
-                        }
-                      }
-                    },
-                    [_vm._v(_vm._s(_vm.lang("upcoming")))]
+                    [_vm._v(_vm._s(_vm.lang("home")))]
                   )
                 ],
                 1
@@ -6904,7 +6866,7 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("main", [
-    !_vm.loading && _vm.items.length
+    !_vm.loading
       ? _c("div", { staticClass: "content-submenu" }, [
           _c("div", { staticClass: "sort-wrap no-select" }, [
             _c(
@@ -6990,7 +6952,7 @@ var render = function() {
               })
             }),
             _vm._v(" "),
-            !_vm.items.length
+            !_vm.items
               ? _c("span", { staticClass: "nothing-found" }, [
                   _vm._v(_vm._s(_vm.lang("nothing found")))
                 ])
@@ -7022,7 +6984,7 @@ var render = function() {
       : _vm._e(),
     _vm._v(" "),
     _vm.loading
-      ? _c("span", { staticClass: "loader fullsize-loader" }, [_c("i")])
+      ? _c("span", { staticClass: "loader-old fullsize-loader" }, [_c("i")])
       : _vm._e()
   ])
 }
@@ -13984,14 +13946,9 @@ function loadItems(_ref, response) {
       commit = _ref.commit;
 
   commit('SET_LOADING', true);
-  (0, _axios2.default)(config.api + '/items/' + response.name + '/' + state.userFilter + '/' + state.userSortDirection).then(function (value) {
-    var _value$data = value.data,
-        data = _value$data.data,
-        next_page_url = _value$data.next_page_url;
-
-
+  (0, _axios2.default)(config.api + '/now-playing').then(function (value) {
+    var data = value.data;
     commit('SET_ITEMS', data);
-    commit('SET_PAGINATOR', next_page_url);
 
     setTimeout(function () {
       commit('SET_LOADING', false);
@@ -14008,9 +13965,9 @@ function loadMoreItems(_ref2, next_page_url) {
 
   commit('SET_CLICKED_LOADING', true);
   (0, _axios2.default)(next_page_url).then(function (value) {
-    var _value$data2 = value.data,
-        data = _value$data2.data,
-        next_page_url = _value$data2.next_page_url;
+    var _value$data = value.data,
+        data = _value$data.data,
+        next_page_url = _value$data.next_page_url;
 
 
     commit('SET_PAGINATOR', next_page_url);

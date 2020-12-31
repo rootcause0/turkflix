@@ -10,14 +10,7 @@
 
         <ul class="site-nav site-nav-first">
           <li>
-            <router-link to="/trending" @click.native="refresh('trending')">{{ lang('trending') }}</router-link>
-          </li>
-          <li>
-            <router-link to="/now-playing" @click.native="refresh('now-playing')">{{ lang('now-playing') }}
-            </router-link>
-          </li>
-          <li>
-            <router-link to="/upcoming" @click.native="refresh('upcoming')">{{ lang('upcoming') }}</router-link>
+            <router-link to="/" @click.native="refresh('/')">{{ lang('home') }}</router-link>
           </li>
         </ul>
 

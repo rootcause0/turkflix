@@ -2,11 +2,9 @@ import http from 'axios';
 
 export function loadItems({state, commit}, response) {
   commit('SET_LOADING', true);
-  http(`${config.api}/items/${response.name}/${state.userFilter}/${state.userSortDirection}`).then(value => {
-    const {data, next_page_url} = value.data;
-
+  http(`${config.api}/now-playing`).then(value => {
+    const data = value.data;
     commit('SET_ITEMS', data);
-    commit('SET_PAGINATOR', next_page_url);
 
     setTimeout(() => {
       commit('SET_LOADING', false);
