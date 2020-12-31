@@ -27,7 +27,7 @@
         <!--<span v-if="auth && localItem.watchlist && ! rated" class="remove-from-watchlist" @click="removeItem()">{{ lang('remove from watchlist') }}</span>-->
         <span v-if="auth && ! localItem.tmdb_id" class="edit-item" @click="editItem()">Edit</span>
 
-        <router-link :to="{ name: `subpage-${localItem.slug}`, params: { id: localItem.id, slug: localItem.slug }}">
+        <router-link :to="{ name: `subpage`, params: { id: localItem.id, slug: localItem.slug }}">
           <img v-if="localItem.poster" :src="poster" class="item-image" width="185" height="278">
           <img v-if=" ! localItem.poster" :src="noImage" class="item-image" width="185" height="278">
         </router-link>

@@ -123,7 +123,7 @@
       </div>
     </div>
 
-    <span class="loader fullsize-loader" v-show="loading"><i></i></span>
+    <span class="loader-old fullsize-loader" v-show="loading"><i></i></span>
   </main>
 </template>
 

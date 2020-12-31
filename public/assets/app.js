@@ -6775,7 +6775,7 @@ var render = function() {
               {
                 attrs: {
                   to: {
-                    name: "subpage-" + _vm.localItem.slug,
+                    name: "subpage",
                     params: { id: _vm.localItem.id, slug: _vm.localItem.slug }
                   }
                 }
@@ -10453,7 +10453,7 @@ var render = function() {
             expression: "loading"
           }
         ],
-        staticClass: "loader fullsize-loader"
+        staticClass: "loader-old fullsize-loader"
       },
       [_c("i")]
     )
