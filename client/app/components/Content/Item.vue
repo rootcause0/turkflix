@@ -21,9 +21,6 @@
           <span :title="lang('episodes')" v-if="displaySeason(localItem) && latestEpisode" @click="openSeasonModal(localItem)" class="is-a-show">
             S{{ season }}E{{ episode }}
           </span>
-          <span :title="lang('finished')" v-if="displaySeason(localItem) && !latestEpisode" @click="openSeasonModal(localItem)" class="is-a-show">
-            <i class="is-finished"></i>
-          </span>
         </div>
 
         <!--<span v-if="auth && localItem.rating == null && ! rated" class="add-to-watchlist" @click="addToWatchlist(localItem)">{{ lang('add to watchlist') }}</span>-->

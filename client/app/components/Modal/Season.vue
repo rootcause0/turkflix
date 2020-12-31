@@ -9,7 +9,7 @@
     </div>
 
     <div class="modal-content modal-content-loading" v-if="loadingModalData">
-      <span class="loader fullsize-loader"><i></i></span>
+      <span class="loader-old fullsize-loader"><i></i></span>
     </div>
 
     <div class="season-tabs" v-if=" ! loadingModalData">
@@ -24,7 +24,7 @@
     </div>
 
     <div class="modal-content" v-if=" ! loadingModalData">
-      <div @click="toggleEpisode(episode)"
+      <div @click="openSource(episode)"
            class="modal-item" v-for="(episode, index) in shows.seasons[seasonActiveModal].episodes"
            :data-episode="episode.name"
       >
@@ -69,8 +69,17 @@
     },
 
     methods: {
-      ...mapMutations([ 'SET_SEASON_ACTIVE_MODAL', 'CLOSE_MODAL', 'SET_LOADING_MODAL_DATA', 'SET_MODAL_DATA' ]),
-
+      ...mapMutations([ 'SET_SEASON_ACTIVE_MODAL', 'CLOSE_MODAL', 'SET_LOADING_MODAL_DATA', 'SET_MODAL_DATA','OPEN_MODAL' ]),
+      openSource(episode) {
+          const data = {
+          id:episode.id,
+          sources: episode.sources,
+        };
+        this.OPEN_MODAL({
+          type: 'source',
+          data,
+        });
+      },
       released(date) {
         const released = new Date(date * 1000);
 
@@ -100,13 +109,7 @@
       },
 
       toggleEpisode(episode) {
-        if(this.auth) {
-          episode.seen = ! episode.seen;
-
-          http.patch(`${config.api}/toggle-episode/${episode.id}`).catch(error => {
-            episode.seen = ! episode.seen;
-          });
-        }
+        this.openSourceModal(episode);
       },
 
       seasonCompleted(index) {

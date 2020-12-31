@@ -82,7 +82,7 @@
     public function getAllByTmdbId($id)
     {
       Carbon::setLocale(config('app.TRANSLATION'));
-      $shows = Show::with('seasons.episodes')->find($id);
+      $shows = Show::with('seasons.episodes.sources')->find($id);
       return [
         'shows' => $shows,
         'spoiler' => Setting::first()->episode_spoiler_protection,

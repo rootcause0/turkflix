@@ -49,8 +49,8 @@
                                v-for="genre in item.genre">{{ genre.name }}</router-link>
                 </span>
                 </div>
-                <div class="big-teaser-buttons no-select"  @click="openSeasonModal(item)">
-                  <span :title="lang('episodes')"
+                <div class="big-teaser-buttons no-select">
+                  <span :title="lang('episodes')"  @click="openSeasonModal(item)"
                         class="button-watchlist">
                 İzle
               </span>
