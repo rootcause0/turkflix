@@ -74,6 +74,7 @@
   "loading imdb rating": "IMDb Puanı Yükleniyor...",
   "no imdb rating": "IMDb Puanı Bulunamadı",
   "overview": "Açıklama",
+  "overview-episode": "Bölüm Açıklaması",
   "watchlist": "İzleme Listesi",
   "show watchlist": "Show Watchlist Items everywhere",
   "feedback": "If you have any feedback for us, please open an issue on",

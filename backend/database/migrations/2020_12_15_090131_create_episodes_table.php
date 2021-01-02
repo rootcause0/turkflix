@@ -12,7 +12,7 @@ class CreateEpisodesTable extends Migration
             $table->bigIncrements('id');
             $table->string('name');
             $table->integer('episode_number');
-            $table->text('src')->nullable();
+            $table->text('episode_description');
             $table->integer('seen')->default(0);
             $table->bigInteger('season_id')->unsigned();
             $table->foreign('season_id')->references('id')->on('seasons');

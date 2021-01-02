@@ -32,7 +32,7 @@
       </div>
     </header>
 
-    <search></search>
+    <search v-show="this.$route.name !== 'movie'"></search>
   </div>
 </template>
 

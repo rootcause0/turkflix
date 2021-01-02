@@ -8,6 +8,7 @@ import SearchContent from './components/Content/SearchContent.vue';
 import Settings from './components/Content/Settings/Index.vue';
 import TMDBContent from './components/Content/TMDBContent.vue';
 import Subpage from './components/Content/Subpage.vue';
+import Watch from './components/Content/Watch.vue';
 import Calendar from './components/Content/Calendar.vue';
 
 Vue.use(Router);
@@ -18,7 +19,7 @@ export default new Router({
     { path: '/', component: Content, name: 'home' },
 
     // todo: use props for media type
-    { path: '/movies', component: Content, name: 'movie' },
+    { path: '/watch/:show-episode-:episode', component: Watch, name: 'movie',props:true },
     { path: '/tv', component: Content, name: 'tv' },
     { path: '/watchlist/:type?', component: Content, name: 'watchlist' },
     

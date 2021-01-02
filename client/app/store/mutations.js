@@ -69,5 +69,14 @@ export default {
 
   [type.SET_SHOW_FILTERS](state, bool) {
     state.showFilters = bool;
-  }
+  },
+  [type.SET_PLAYING_SHOW](state, show) {
+    state.playingShow = show;
+  },
+  [type.SET_PLAYING_SEASON](state, season) {
+    state.playingSeason =  season;
+  },
+  [type.SET_PLAYING_EPISODE](state, episode) {
+    state.playingEpisode = episode;
+  },
 }

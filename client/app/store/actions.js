@@ -59,6 +59,8 @@ export function fetchEpisodes({commit}, data) {
       shows: response.data.shows,
       spoiler: response.data.spoiler
     });
+    // Playing show mutation
+    commit('SET_PLAYING_SHOW',data.title);
 
     commit('SET_LOADING_MODAL_DATA', false);
 

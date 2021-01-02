@@ -30,7 +30,10 @@ export default new Vuex.Store({
     loadingModalData: true,
     seasonActiveModal: 1,
     modalType: '',
-    itemLoadedSubpage: false
+    itemLoadedSubpage: false,
+    playingShow:null,
+    playingEpisode:null,
+    playingSeason:null,
   },
   mutations,
   actions
