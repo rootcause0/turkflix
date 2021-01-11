@@ -79,4 +79,7 @@ export default {
   [type.SET_PLAYING_EPISODE](state, episode) {
     state.playingEpisode = episode;
   },
+  [type.SET_PLAYING_DATA](state, data) {
+    state.playingData = data;
+  },
 }

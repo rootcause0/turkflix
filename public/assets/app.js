@@ -1421,7 +1421,7 @@ exports.default = {
       return this.modalData.spoiler;
     }
   }),
-  methods: (0, _extends3.default)({}, (0, _vuex.mapMutations)(['SET_SEASON_ACTIVE_MODAL', 'CLOSE_MODAL', 'SET_LOADING_MODAL_DATA', 'SET_MODAL_DATA', 'OPEN_MODAL', 'SET_PLAYING_EPISODE']), {
+  methods: (0, _extends3.default)({}, (0, _vuex.mapMutations)(['SET_SEASON_ACTIVE_MODAL', 'CLOSE_MODAL', 'SET_LOADING_MODAL_DATA', 'SET_MODAL_DATA', 'OPEN_MODAL', 'SET_PLAYING_EPISODE', 'SET_PLAYING_SEASON']), {
     openSource: function openSource(episode) {
       var data = {
         id: episode.id,
@@ -1776,6 +1776,9 @@ exports.default = {
     },
     playingEpisode: function playingEpisode(state) {
       return state.playingEpisode;
+    },
+    playingSeason: function playingSeason(state) {
+      return state.playingSeason;
     }
   })),
 
@@ -3537,30 +3540,33 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 exports.default = {
   mixins: [_misc2.default, _item2.default],
-  props: ['source'],
+  props: ['showPlaying', 'seasonPlaying', 'episodePlaying'],
 
   computed: (0, _extends3.default)({}, (0, _vuex.mapState)({
     loading: function loading(state) {
       return state.loading;
     },
-    playingShow: function playingShow(state) {
-      return state.playingShow;
-    },
-    playingSeason: function playingSeason(state) {
-      return state.playingSeason;
-    },
-    playingEpisode: function playingEpisode(state) {
-      return state.playingEpisode;
+    playing: function playing(state) {
+      return state.playingData;
     }
 
-  }), {
-    shows: function shows() {
-      return this.modalData.shows;
+  })),
+
+  methods: (0, _extends3.default)({}, (0, _vuex.mapState)(['playingData']), (0, _vuex.mapMutations)(['SET_PLAYING_DATA']), (0, _vuex.mapActions)(['fetchPlaying']), {
+    isEmpty: function isEmpty(obj) {
+      for (var key in obj) {
+        if (obj.hasOwnProperty(key)) return false;
+      }
+      return true;
     }
   }),
-
-  methods: (0, _extends3.default)({}, (0, _vuex.mapMutations)(['SET_PLAYING_SHOW', 'SET_PLAYING_SEASON', 'SET_PLAYING_EPISODE']))
-
+  created: function created() {
+    var data = { showPlaying: this.showPlaying, seasonPlaying: this.seasonPlaying, episodePlaying: this.episodePlaying };
+    this.fetchPlaying(data);
+    if (isEmpty(null)) {
+      alert('test');
+    }
+  }
 };
 
 /***/ }),
@@ -6010,6 +6016,7 @@ var render = function() {
                 on: {
                   click: function($event) {
                     _vm.SET_SEASON_ACTIVE_MODAL(index)
+                    _vm.SET_PLAYING_SEASON(seasons.season_name)
                   }
                 }
               },
@@ -6286,8 +6293,9 @@ var render = function() {
                     name: "movie",
                     params: {
                       source: source,
-                      show: _vm.slugify(_vm.playingShow),
-                      episode: _vm.playingEpisode
+                      showPlaying: _vm.slugify(_vm.playingShow),
+                      episodePlaying: _vm.playingEpisode,
+                      seasonPlaying: _vm.playingSeason
                     }
                   }
                 }
@@ -6375,7 +6383,7 @@ if (false) {
 
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+    value: true
 });
 
 var _vue = __webpack_require__(22);
@@ -6422,9 +6430,9 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 _vue2.default.use(_vueRouter2.default);
 exports.default = new _vueRouter2.default({
-  mode: 'history',
-  base: _config2.default.uri,
-  routes: [{ path: '/', component: _Content2.default, name: 'home' }, { path: '/watch/:show-episode-:episode', component: _Watch2.default, name: 'movie', props: true }, { path: '/tv', component: _Content2.default, name: 'tv' }, { path: '/watchlist/:type?', component: _Content2.default, name: 'watchlist' }, { path: '/shows/:id?/:slug?', component: _Subpage2.default, name: 'subpage', props: true }, { path: '/search', component: _SearchContent2.default, name: 'search' }, { path: '/settings', component: _Index2.default, name: 'settings' }, { path: '/suggestions', component: _TMDBContent2.default, name: 'suggestions' }, { path: '/trending', component: _TMDBContent2.default, name: 'trending' }, { path: '/upcoming', component: _TMDBContent2.default, name: 'upcoming' }, { path: '/now-playing', component: _TMDBContent2.default, name: 'now-playing' }, { path: '/genre/:genre', component: _TMDBContent2.default, name: 'genre' }, { path: '/calendar', component: _Calendar2.default, name: 'calendar' }, { path: '*', redirect: '/' }]
+    mode: 'history',
+    base: _config2.default.uri,
+    routes: [{ path: '/', component: _Content2.default, name: 'home' }, { path: '/watch/:showPlaying/season-:seasonPlaying-episode-:episodePlaying', component: _Watch2.default, name: 'movie', props: true }, { path: '/tv', component: _Content2.default, name: 'tv' }, { path: '/watchlist/:type?', component: _Content2.default, name: 'watchlist' }, { path: '/shows/:id?/:slug?', component: _Subpage2.default, name: 'subpage', props: true }, { path: '/search', component: _SearchContent2.default, name: 'search' }, { path: '/settings', component: _Index2.default, name: 'settings' }, { path: '/suggestions', component: _TMDBContent2.default, name: 'suggestions' }, { path: '/trending', component: _TMDBContent2.default, name: 'trending' }, { path: '/upcoming', component: _TMDBContent2.default, name: 'upcoming' }, { path: '/now-playing', component: _TMDBContent2.default, name: 'now-playing' }, { path: '/genre/:genre', component: _TMDBContent2.default, name: 'genre' }, { path: '/calendar', component: _Calendar2.default, name: 'calendar' }, { path: '*', redirect: '/' }]
 });
 
 /***/ }),
@@ -10504,7 +10512,7 @@ var render = function() {
           _c("iframe", {
             staticClass: "resp-iframe",
             attrs: {
-              src: this.source.src,
+              src: this.playing.data.seasons[0].episodes[0].sources[0].src,
               gesture: "media",
               allow: "encrypted-media",
               allowfullscreen: ""
@@ -10534,7 +10542,9 @@ var render = function() {
             _vm._v(" "),
             _c("p", [
               _vm._v(
-                "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
+                _vm._s(
+                  this.playing.data.seasons[0].episodes[0].episode_description
+                )
               )
             ])
           ])
@@ -14005,7 +14015,8 @@ exports.default = new _vuex2.default.Store({
     itemLoadedSubpage: false,
     playingShow: null,
     playingEpisode: null,
-    playingSeason: null
+    playingSeason: null,
+    playingData: null
   },
   mutations: _mutations2.default,
   actions: actions
@@ -14027,6 +14038,7 @@ var _objectDestructuringEmpty2 = __webpack_require__(225);
 var _objectDestructuringEmpty3 = _interopRequireDefault(_objectDestructuringEmpty2);
 
 exports.loadItems = loadItems;
+exports.fetchPlaying = fetchPlaying;
 exports.loadMoreItems = loadMoreItems;
 exports.setSearchTitle = setSearchTitle;
 exports.setColorScheme = setColorScheme;
@@ -14058,8 +14070,21 @@ function loadItems(_ref, response) {
   });
 }
 
-function loadMoreItems(_ref2, next_page_url) {
-  var commit = _ref2.commit;
+function fetchPlaying(_ref2, data) {
+  var state = _ref2.state,
+      commit = _ref2.commit;
+
+  commit('SET_LOADING', true);
+  (0, _axios2.default)(config.api + '/fetch-playing/' + data.showPlaying + '/' + data.seasonPlaying + '/' + data.episodePlaying).then(function (response) {
+    commit('SET_PLAYING_DATA', {
+      data: response.data.playing
+    });
+  });
+  commit('SET_LOADING', false);
+}
+
+function loadMoreItems(_ref3, next_page_url) {
+  var commit = _ref3.commit;
 
   commit('SET_CLICKED_LOADING', true);
   (0, _axios2.default)(next_page_url).then(function (value) {
@@ -14077,14 +14102,14 @@ function loadMoreItems(_ref2, next_page_url) {
   });
 }
 
-function setSearchTitle(_ref3, title) {
-  var commit = _ref3.commit;
+function setSearchTitle(_ref4, title) {
+  var commit = _ref4.commit;
 
   commit('SET_SEARCH_TITLE', title);
 }
 
-function setColorScheme(_ref4, color) {
-  var commit = _ref4.commit;
+function setColorScheme(_ref5, color) {
+  var commit = _ref5.commit;
 
   document.body.classList.remove('dark', 'light');
 
@@ -14094,9 +14119,9 @@ function setColorScheme(_ref4, color) {
   commit('SET_COLOR_SCHEME', color);
 }
 
-function setPageTitle(_ref5) {
+function setPageTitle(_ref6) {
   var title = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
-  (0, _objectDestructuringEmpty3.default)(_ref5);
+  (0, _objectDestructuringEmpty3.default)(_ref6);
 
   if (!title) {
     document.title = 'Turkflix';
@@ -14105,8 +14130,8 @@ function setPageTitle(_ref5) {
   }
 }
 
-function fetchEpisodes(_ref6, data) {
-  var commit = _ref6.commit;
+function fetchEpisodes(_ref7, data) {
+  var commit = _ref7.commit;
 
   commit('SET_LOADING_MODAL_DATA', true);
   (0, _axios2.default)(config.api + '/episodes/' + data.id).then(function (response) {
@@ -14210,6 +14235,8 @@ exports.default = (_type$SET_SEARCH_TITL = {}, (0, _defineProperty3.default)(_ty
   state.playingSeason = season;
 }), (0, _defineProperty3.default)(_type$SET_SEARCH_TITL, type.SET_PLAYING_EPISODE, function (state, episode) {
   state.playingEpisode = episode;
+}), (0, _defineProperty3.default)(_type$SET_SEARCH_TITL, type.SET_PLAYING_DATA, function (state, data) {
+  state.playingData = data;
 }), _type$SET_SEARCH_TITL);
 
 /***/ }),
@@ -14398,6 +14425,7 @@ var SET_SHOW_FILTERS = exports.SET_SHOW_FILTERS = 'SET_SHOW_FILTERS';
 var SET_PLAYING_SHOW = exports.SET_PLAYING_SHOW = 'SET_PLAYING_SHOW';
 var SET_PLAYING_SEASON = exports.SET_PLAYING_SEASON = 'SET_PLAYING_SEASON';
 var SET_PLAYING_EPISODE = exports.SET_PLAYING_EPISODE = 'SET_PLAYING_EPISODE';
+var SET_PLAYING_DATA = exports.SET_PLAYING_DATA = 'SET_PLAYING_DATA';
 
 /***/ }),
 /* 237 */

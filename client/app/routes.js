@@ -18,8 +18,7 @@ export default new Router({
   routes: [
     { path: '/', component: Content, name: 'home' },
 
-    // todo: use props for media type
-    { path: '/watch/:show-episode-:episode', component: Watch, name: 'movie',props:true },
+    { path: '/watch/:showPlaying/season-:seasonPlaying-episode-:episodePlaying', component: Watch, name: 'movie',props:true },
     { path: '/tv', component: Content, name: 'tv' },
     { path: '/watchlist/:type?', component: Content, name: 'watchlist' },
     

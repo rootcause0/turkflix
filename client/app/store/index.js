@@ -34,6 +34,7 @@ export default new Vuex.Store({
     playingShow:null,
     playingEpisode:null,
     playingSeason:null,
+    playingData:null,
   },
   mutations,
   actions

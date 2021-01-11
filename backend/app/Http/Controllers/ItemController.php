@@ -5,6 +5,7 @@
   use App\Services\Models\AlternativeTitleService;
   use App\Services\Models\EpisodeService;
   use App\Services\Models\ItemService;
+  use App\Services\Models\Show;
   use Illuminate\Support\Facades\Request;
   use Symfony\Component\HttpFoundation\Response;
 
@@ -22,6 +23,20 @@
     public function items($type, $orderBy, $sortDirection)
     {
       return $this->itemService->getWithPagination($type, $orderBy, $sortDirection);
+    }
+    public function fetchPlaying($slug,$season,$episode)
+    {
+
+        $playing = Show::with(['seasons' => function ($q) use($season) {
+            $q->where('season_name',$season); // query seasons table
+        }, 'seasons.episodes' => function ($q) use($episode) {
+            $q->where('episode_number',$episode); // query episodes table
+        }, 'seasons.episodes.sources' => function ($q) {
+            $q->first(); // query sources table
+                }])->where('slug',$slug)->firstOrFail();
+
+     return ['playing'=>$playing];
+
     }
 
     public function episodes($id)

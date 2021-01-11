@@ -13,7 +13,7 @@
     </div>
 
     <div class="season-tabs" v-if=" ! loadingModalData">
-      <span class="season-number no-select" @click="SET_SEASON_ACTIVE_MODAL(index);" v-for="(seasons, index) in shows.seasons" :class="{active: index == seasonActiveModal}">
+      <span class="season-number no-select" @click="SET_SEASON_ACTIVE_MODAL(index); SET_PLAYING_SEASON(seasons.season_name)" v-for="(seasons, index) in shows.seasons" :class="{active: index == seasonActiveModal}">
         {{seasons.season_name}}
       </span>
     </div>
@@ -68,7 +68,7 @@ import {mapState, mapMutations, mapActions} from 'vuex';
       }
     },
     methods: {
-      ...mapMutations([ 'SET_SEASON_ACTIVE_MODAL', 'CLOSE_MODAL', 'SET_LOADING_MODAL_DATA', 'SET_MODAL_DATA','OPEN_MODAL','SET_PLAYING_EPISODE']),
+      ...mapMutations([ 'SET_SEASON_ACTIVE_MODAL', 'CLOSE_MODAL', 'SET_LOADING_MODAL_DATA', 'SET_MODAL_DATA','OPEN_MODAL','SET_PLAYING_EPISODE','SET_PLAYING_SEASON']),
       openSource(episode) {
           const data = {
           id:episode.id,

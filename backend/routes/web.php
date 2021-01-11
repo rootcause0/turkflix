@@ -5,7 +5,9 @@
     Route::post('/login', 'UserController@login');
 
     Route::get('/episodes/{id}', 'ItemController@episodes');
-    Route::get('/items/{type}/{orderBy}/{sortDirection}', 'ItemController@items');
+      Route::get('/fetch-playing/{slug}/{season}/{episode}', 'ItemController@fetchPlaying');
+
+      Route::get('/items/{type}/{orderBy}/{sortDirection}', 'ItemController@items');
     Route::get('/search-items', 'ItemController@search');
 
     Route::get('/calendar', 'CalendarController@items');

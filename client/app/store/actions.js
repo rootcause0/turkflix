@@ -16,6 +16,17 @@ export function loadItems({state, commit}, response) {
   });
 }
 
+export function fetchPlaying({state, commit},data) {
+  commit('SET_LOADING', true);
+  http(`${config.api}/fetch-playing/${data.showPlaying}/${data.seasonPlaying}/${data.episodePlaying}`).then(response => {
+    commit('SET_PLAYING_DATA', {
+      data: response.data.playing,
+    });
+  });
+  commit('SET_LOADING', false);
+}
+
+
 export function loadMoreItems({commit}, next_page_url) {
   commit('SET_CLICKED_LOADING', true);
   http(next_page_url).then(value => {

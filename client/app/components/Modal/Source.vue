@@ -10,7 +10,7 @@
 
     <div class="modal-content">
       <div class="modal-item" v-for="(source, index) in modalData.sources">
-        <router-link :to="{ name: `movie`, params: { source: source,show:slugify(playingShow),episode:playingEpisode }}">
+        <router-link :to="{ name: `movie`, params: { source: source,showPlaying:slugify(playingShow),episodePlaying:playingEpisode,seasonPlaying:playingSeason }}">
       <span class="modal-name">{{source.source_name}}</span>
         </router-link>
       </div>
@@ -30,7 +30,8 @@ export default {
     ...mapState({
       modalData: state => state.modalData,
       playingShow: state => state.playingShow,
-      playingEpisode: state => state.playingEpisode
+      playingEpisode: state => state.playingEpisode,
+      playingSeason: state => state.playingSeason
     }),
 
 

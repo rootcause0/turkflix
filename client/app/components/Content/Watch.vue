@@ -2,7 +2,7 @@
   <main>
    <div class="wrap-content" v-show=" !loading">
      <div class="resp-container">
-       <iframe class="resp-iframe" :src="this.source.src" gesture="media"  allow="encrypted-media" allowfullscreen></iframe>
+       <iframe class="resp-iframe" :src="this.playing.data.seasons[0].episodes[0].sources[0].src" gesture="media"  allow="encrypted-media" allowfullscreen></iframe>
      </div>
    </div>
 
@@ -10,7 +10,7 @@
       <div class="wrap">
         <div class="episode-overview">
           <h2>{{ lang('overview-episode') }}</h2>
-          <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+          <p>{{this.playing.data.seasons[0].episodes[0].episode_description}}</p>
         </div>
 
       </div>
@@ -32,25 +32,37 @@ import http from 'axios';
 
 export default {
   mixins: [MiscHelper, ItemHelper],
-  props: ['source'],
+  props: ['showPlaying','seasonPlaying','episodePlaying'],
 
 
   computed: {
     ...mapState({
       loading: state => state.loading,
-      playingShow:state => state.playingShow,
-      playingSeason:state => state.playingSeason,
-      playingEpisode:state => state.playingEpisode,
+      playing: state => state.playingData,
 
     }),
-    shows() {
-      return this.modalData.shows;
-    },
   },
 
   methods:{
-    ...mapMutations(['SET_PLAYING_SHOW','SET_PLAYING_SEASON','SET_PLAYING_EPISODE']),
+    ...mapState(['playingData']),
+    ...mapMutations(['SET_PLAYING_DATA']),
+    ...mapActions(['fetchPlaying']),
+     isEmpty(obj) {
+  for(var key in obj) {
+    if(obj.hasOwnProperty(key))
+      return false;
+  }
+  return true;
+}
+
   },
+  created() {
+    let data = {showPlaying:this.showPlaying,seasonPlaying:this.seasonPlaying,episodePlaying:this.episodePlaying}
+    this.fetchPlaying(data);
+    if(isEmpty(null)){ //EN SON BURADA KALDIN EMPTY Mİ ONA BAKACAKSIN,GELEN DATANIN Kİ YANLIŞ URL GİRİLMESİN (OLMAYAN SEZON V.B.)
+      alert('test');
+    }
+  }
 
 }
 </script>
