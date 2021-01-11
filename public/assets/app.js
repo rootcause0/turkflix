@@ -3370,14 +3370,9 @@ exports.default = {
       return this.item.overview ? this.item.overview : '-';
     },
     backdropImage: function backdropImage() {
-      var backdropUrl = config.backdropTMDB;
-
-      if (this.item.rating != null) {
-        backdropUrl = config.backdrop;
-      }
 
       return {
-        backgroundImage: 'url(' + backdropUrl + this.item.backdrop + ')'
+        backgroundImage: 'url(' + location.protocol + '//' + location.hostname + '/assets' + this.item.back_poster + ')'
       };
     },
     posterImage: function posterImage() {

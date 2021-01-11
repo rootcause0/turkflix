@@ -5,6 +5,9 @@
         <div class="col-auto">
             <h1>Diziler</h1>
         </div>
+        <div class="col-auto">
+            <a href="{{route("series.create")}}" class="btn btn-success btn-sm">Yeni Ekle</a>
+        </div>
     </div>
 @stop
 @section('content')
@@ -20,21 +23,23 @@
                     <th style="width: 10px">Id</th>
                     <th style="width: 150px">Dizi İsmi</th>
                     <th style="width: 170px">Dizinin Orijinal İsmi</th>
-                    <th style="width: 150px">İlk Yayımlanma</th>
                     <th>Slug</th>
                     <th>Youtube Fragman Keyi</th>
-                    <th style="width: 40px"></th>
+                    <th style="width: 150px">IMDB ID</th>
+                    <th style="width: 150px">İlk Yayımlanma</th>
+                    <th style="width: 100px"></th>
                 </tr>
                 </thead>
                 <tbody>
                 @foreach($items as $item)
                     <tr>
                         <td>{{$item->id}}</td>
-                        <td>{{$item->title}}</td>
-                        <td>{{$item->original_title}}</td>
-                        <td>{{$item->release}}</td>
+                        <td>{{$item->show_title}}</td>
+                        <td>{{$item->original_title ? $item->original_title : "Yok"}}</td>
                         <td>{{$item->slug}}</td>
                         <td>{{$item->youtube_key}}</td>
+                        <td>{{$item->imdb_id}}</td>
+                        <td>{{$item->release}}</td>
                         <td>
                             <a href="" class="btn btn-sm float-left" title="Düzenle">
                                 <i class="fa fa-edit"></i>

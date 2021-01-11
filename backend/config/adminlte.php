@@ -242,9 +242,9 @@ return [
             'can'  => 'manage-blog',
         ],
 
-        ['header' => 'Yönetim'],
+        ['header' => 'Dizi Yönetim'],
         [
-            'text' => 'Dizi Yönetim',
+            'text' => 'Diziler',
             'url'  => '/series',
             'icon' => 'fas fa-fw fa-film',
         ],
